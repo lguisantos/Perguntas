@@ -1,42 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <!-- Como ja definimos a pasta public na rota, não precisamos colocá-la na importação -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Tudo que for customizado deve ser carregado depois do Bootstrap -->
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+<!-- importando um módulo -->
+<%- include ('partials/head.ejs') %>
 
 <body>
-
-    <!-- Bootstrap: navbar -->
-    <nav class="navbar navbar-light bg-light">
-        <a href="/" class="navbar-brand">
-            <img src="/img/logo.png" style="width: 50px; height: 40px;" alt="">
-        </a>
-    </nav>
+    <%- include ('partials/navbar.ejs') %>
 
     <!-- Container do Bootstrap -->
     <div class="container" id="formulario">
+
         <!-- Bootstrap: card -->
         <div class="card">
             <div class="card-header">
                 <h3>Realizar Pedido</h3>
             </div>
+
             <div class="card-body">
-                <form>
+
+                <form method="POST" action="/novapergunta">
                     <!-- Bootstrap: form-control -> adapta os campos ao formulário-->
                     <label>Titulo</label>
-                    <input placeholder="Insira um Título" type="text" class="form-control">
+                    <input name="titulo" placeholder="Insira um Título" type="text" class="form-control">
 
                     <br><label>Descrição</label>
-                    <textarea placeholder="Insira uma Descrição" class="form-control"></textarea>
+                    <textarea name="descricao" placeholder="Insira uma Descrição" class="form-control"></textarea>
                     <!-- Bootstrap:  btn btn-success -->
                     <br><button class="btn btn-success">Perguntar</button>
                 </form>
@@ -44,15 +32,7 @@
         </div>
 
     </div>
-
 </body>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-<script src="/js/bootstrap.min.js"></script>
+<%- include ('partials/importBootstrapScripts.ejs') %>
 
 </html>
