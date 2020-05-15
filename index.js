@@ -3,8 +3,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const dbConnection = require('./db/db');
 
-"use strict";
-
 /**
  * @description Assim que o módulo index.js for executado,
  *              O model também será
@@ -106,9 +104,11 @@ app.get('/pergunta/:id', (req, res) => {
         where: { id: id }
 
     }).then(pergunta => {
-        
+
         if (pergunta != undefined) {
-            return res.render('perguntaDetalhes');
+            return res.render('perguntaDetalhes', {
+                params: pergunta
+            });
         } else {
             return res.redirect('/')
         }

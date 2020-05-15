@@ -1,1 +1,14 @@
-<h1>Detalhes da pergunta clicada</h1>
+<%- include ('partials/head.ejs') %>
+
+<body>
+    <%- include ('partials/navbar.ejs')  %>
+
+    <!-- Bootstrap: container -->
+    <div class="container">
+        <hr>
+        <h1><%= params.title %> </h1>
+        <p><%= params.description %> </p>
+    </div>
+</body>
+
+<%- include ('partials/importBootstrapScripts.ejs') %>
