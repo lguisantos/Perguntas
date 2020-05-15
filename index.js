@@ -49,8 +49,14 @@ app.get('/', (req, res) => {
     /**
      * @function findAll() Faz um SELECT * no módulo que representa a nossa tabela
      * @param raw Traz apenas os dados registrados no banco e não todas as configurações
+     * @param order Ordena as informações
      */
-    modelPerguntas.findAll({ raw: true }).then(perguntas => {
+    modelPerguntas.findAll({
+        raw: true, order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then(perguntas => {
+
         /**
         * @function render() Quando utilizamos a funcão render, automáticamente ele retorna o
         *                  arquivo contido dentro da pasta views
@@ -91,6 +97,23 @@ app.post('/novapergunta', (req, res) => {
         return res.send(`Erro ao registrar dados ${e}`);
     });
 });
+
+app.get('/pergunta/:id', (req, res) => {
+
+    const id = req.params.id
+
+    modelPerguntas.findOne({
+        where: { id: id }
+
+    }).then(pergunta => {
+        
+        if (pergunta != undefined) {
+            return res.render('perguntaDetalhes');
+        } else {
+            return res.redirect('/')
+        }
+    })
+})
 
 
 app.listen(666, () => {
