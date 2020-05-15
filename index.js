@@ -41,14 +41,30 @@ app.set('view engine', 'ejs');
  */
 app.use(express.static('public'));
 
+
+// Minhas Rotas
+
 app.get('/', (req, res) => {
 
     /**
-     * @function render Quando utilizamos a funcão render, automáticamente ele retorna o
-     *                  arquivo contido dentro da pasta views
-     * @description Na metodo abaixo, estamos chamando um arquivo .ejs e passando parâmetros
+     * @function findAll() Faz um SELECT * no módulo que representa a nossa tabela
+     * @param raw Traz apenas os dados registrados no banco e não todas as configurações
      */
-    return res.render('index', {})
+    modelPerguntas.findAll({ raw: true }).then(perguntas => {
+        /**
+        * @function render() Quando utilizamos a funcão render, automáticamente ele retorna o
+        *                  arquivo contido dentro da pasta views
+        * 
+        * @param index Nome do módulo a ser renderizado
+        * @param {} .Envio de parâmetros para o módulo
+        * 
+        * @description Na metodo abaixo, estamos chamando um arquivo .ejs e passando parâmetros
+        */
+        return res.render('index', {
+            parameters: perguntas
+        })
+    })
+
 });
 
 app.get('/perguntar?', (req, res) => {
@@ -69,7 +85,7 @@ app.post('/novapergunta', (req, res) => {
         description: descricao
 
     }).then(() => {
-        
+
         return res.redirect('/')
     }).catch((e) => {
         return res.send(`Erro ao registrar dados ${e}`);
