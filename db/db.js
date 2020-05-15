@@ -11,6 +11,7 @@ const Sequelize = require('sequelize');
  * @param host Onde o banco está rodando
  * @param dialect tipo do banco que deseja conectar
  */
+
 const connection = new Sequelize('guia_pergunta', 'root', '1234', {
     host: 'localhost',
     dialect: 'mysql'
