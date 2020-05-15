@@ -14,6 +14,7 @@ const Perguntas = dbConnection.define('PERGUNTAS', {
 
 /**
  * @description Sincronizando a minha model com o Banco de Dados
+ * @param force:false Evita que a tabela seja recriada caso ela exista
  */
 Perguntas.sync({ force: false })
     .then(() => {

@@ -6,8 +6,34 @@
     <!-- Bootstrap: container -->
     <div class="container">
         <hr>
-        <h1><%= params.title %> </h1>
-        <p><%= params.description %> </p>
+        <h1><%= pergunta.title %></h1>
+        <p><%= pergunta.description %></p>
+        <hr>
+
+        <!-- formulário de respostas -->
+        <form method="POST" action="/resposta">
+            <h3>Resposta</h3>
+
+            <label for="corpo">Responda:</label>
+
+            <textarea placeholder="Digite a sua resposta:" class="form-control" name="corpo"></textarea>
+
+            <!-- Campo utilizado para guardar o id da pergunta que está sendo respondida -->
+            <input type="hidden" value="<%= pergunta.id %>" name="pergunta">
+            <button type="submit" class="btn btn-Primary" style="margin-top: 10px;">Resposta</button>
+        </form>
+
+        <hr>
+        <h1>Respostas</h1>
+        <hr>
+
+        <% respostas.forEach( i => {%>
+        <div class="card" style="margin-bottom: 15px;">
+            <div class="card-body">
+                <p><%= i.body %></p>
+            </div>
+        </div>
+        <% }) %>
     </div>
 </body>
 

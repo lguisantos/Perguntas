@@ -5,9 +5,10 @@ const dbConnection = require('./db/db');
 
 /**
  * @description Assim que o módulo index.js for executado,
- *              O model também será
+ *              O model também será e as tabelas serão criadas no banco de dados
  */
 const modelPerguntas = require('./db/models/Perguntas');
+const modelRespostas = require('./db/models/Respostas')
 
 /**
  * @description Conexão com o banco de dados
@@ -106,16 +107,50 @@ app.get('/pergunta/:id', (req, res) => {
     }).then(pergunta => {
 
         if (pergunta != undefined) {
-            return res.render('perguntaDetalhes', {
-                params: pergunta
-            });
+
+            modelRespostas.findAll({
+                where: {
+                    questionId: pergunta.id
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+
+            }).then(respostas => {
+
+                return res.render('perguntaDetalhes', {
+                    pergunta: pergunta,
+                    respostas: respostas
+                });
+            }).catch(() => console.log('ID não encontrado!'));
+
         } else {
             return res.redirect('/')
         }
-    })
-})
+    });
+});
 
+app.post('/resposta', (req, res) => {
+
+    /**
+     * @description Importando parâmetros
+     */
+    const { corpo, pergunta } = req.body;
+
+    /**
+     * @function create Registrando uma nova informação no BD
+     */
+    modelRespostas.create({
+        body: corpo,
+        questionId: pergunta
+
+    }).then(() => {
+        console.log('dados salvos com sucesso');
+        return res.redirect(`/pergunta/${pergunta}`);
+
+    }).catch(e => console.log(`Ocorreu um erro: ${e}`));
+});
 
 app.listen(666, () => {
-    console.log(`App rodadando na porta: ${666}`)
+    console.log(`App rodadando na porta: ${666}`);
 });
